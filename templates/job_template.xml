@@ -1,0 +1,29 @@
+<flow-definition plugin="workflow-job">
+  <description>{{description}}</description>
+
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition">
+    <script>
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git '{{repo_url}}'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat '{{build_command}}'
+            }
+        }
+    }
+}
+    </script>
+    <sandbox>true</sandbox>
+  </definition>
+
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

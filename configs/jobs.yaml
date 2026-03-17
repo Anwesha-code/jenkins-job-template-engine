@@ -1,0 +1,13 @@
+jobs:
+
+  - name: job1
+    description: Build Job 1
+    repo_url: https://github.com/example/repo1.git
+    branch: main
+    build_command: echo Building Job 1
+
+  - name: job2
+    description: Build Job 2
+    repo_url: https://github.com/example/repo2.git
+    branch: dev
+    build_command: echo Building Job 2
