@@ -3,23 +3,39 @@
 
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition">
     <script>
-pipeline {
-    agent any
+      pipeline {
+        agent any
 
-    stages {
-        stage('Clone') {
-            steps {
-                git branch: '{{branch}}', url: '{{repo_url}}'
-            }
+        parameters {
+          string(name: 'BRANCH', defaultValue: '{{branch}}')
         }
 
-        stage('Build') {
+        stages {
+          stage('Clone') {
             steps {
-                bat '{{build_command}}'
+              git branch: params.BRANCH, url: '{{repo_url}}'
             }
+          }
+
+          stage('Install') {
+            steps {
+              bat '{{install_command}}'
+            }
+          }
+
+          stage('Build') {
+            steps {
+              bat '{{build_command}}'
+            }
+          }
+
+          stage('Test') {
+            steps {
+              bat '{{test_command}}'
+            }
+          }
         }
-    }
-}
+      }
     </script>
     <sandbox>true</sandbox>
   </definition>

@@ -4,10 +4,16 @@ jobs:
     description: Build Job 1
     repo_url: https://github.com/Anwesha-code/jenkins-job-template-engine.git
     branch: main
+    environment: dev
+    install_command: echo Installing dependencies
     build_command: echo Building Job 1
+    test_command: echo Running tests
 
   - name: job2
     description: Build Job 2
     repo_url: https://github.com/Anwesha-code/jenkins-job-template-engine.git
-    branch: main 
+    branch: main
+    environment: staging
+    install_command: echo Installing dependencies
     build_command: echo Building Job 2
+    test_command: echo Running tests
