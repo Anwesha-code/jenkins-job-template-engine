@@ -9,5 +9,5 @@ jobs:
   - name: job2
     description: Build Job 2
     repo_url: https://github.com/Anwesha-code/jenkins-job-template-engine.git
-    branch: dev
+    branch: main 
     build_command: echo Building Job 2
