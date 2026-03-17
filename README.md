@@ -3,6 +3,9 @@
 ## Overview
 This project automates Jenkins job creation using reusable templates and YAML configuration.
 
+In large DevOps systems, creating multiple Jenkins jobs manually is repetitive and error-prone. 
+This project introduces a template-based approach where a single job template is reused with different parameters, allowing automated and scalable CI/CD job creation.
+
 ## Features
 - Template-based job creation
 - Dynamic variable substitution (Jinja2)
