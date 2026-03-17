@@ -1,5 +1,3 @@
-from urllib import response
-
 import yaml
 import requests
 from jinja2 import Template
@@ -30,22 +28,35 @@ def create_job(job_name, config_xml):
     crumb_data = crumb_response.json()
     crumb_header = {crumb_data['crumbRequestField']: crumb_data['crumb']}
 
-    url = f"{JENKINS_URL}/createItem?name={job_name}"
-
     headers = {
         "Content-Type": "application/xml",
         **crumb_header
     }
 
-    response = requests.post(
-        url,
-        data=config_xml,
-        headers=headers,
-        auth=(USERNAME, API_TOKEN)
-    )
+    check_url = f"{JENKINS_URL}/job/{job_name}/api/json"
+    check = requests.get(check_url, auth=(USERNAME, API_TOKEN))
 
-    if response.status_code == 200:
-        print(f"{job_name} created successfully")
+    if check.status_code == 200:
+        url = f"{JENKINS_URL}/job/{job_name}/config.xml"
+        response = requests.post(
+            url,
+            data=config_xml,
+            headers=headers,
+            auth=(USERNAME, API_TOKEN)
+        )
+        action = "updated"
+    else:
+        url = f"{JENKINS_URL}/createItem?name={job_name}"
+        response = requests.post(
+            url,
+            data=config_xml,
+            headers=headers,
+            auth=(USERNAME, API_TOKEN)
+        )
+        action = "created"
+
+    if response.status_code in [200, 201]:
+        print(f"{job_name} {action} successfully")
     else:
         print(f"Failed {job_name} (Status: {response.status_code})")
         print(response.text)
@@ -57,6 +68,8 @@ def main():
 
     for job in jobs:
         config_xml = template.render(**job)
+        print("GENERATED XML")
+        print(config_xml)
         create_job(job["name"], config_xml)
 
 

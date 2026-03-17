@@ -1,42 +1,52 @@
 <flow-definition plugin="workflow-job">
   <description>{{description}}</description>
 
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>BRANCH</name>
+          <defaultValue>{{branch}}</defaultValue>
+          <description>Branch to build</description>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition">
-    <script>
-      pipeline {
-        agent any
+    <script>pipeline {
+  agent any
 
-        parameters {
-          string(name: 'BRANCH', defaultValue: '{{branch}}')
-        }
+  parameters {
+    string(name: 'BRANCH', defaultValue: '{{branch}}')
+  }
 
-        stages {
-          stage('Clone') {
-            steps {
-              git branch: params.BRANCH, url: '{{repo_url}}'
-            }
-          }
-
-          stage('Install') {
-            steps {
-              bat '{{install_command}}'
-            }
-          }
-
-          stage('Build') {
-            steps {
-              bat '{{build_command}}'
-            }
-          }
-
-          stage('Test') {
-            steps {
-              bat '{{test_command}}'
-            }
-          }
-        }
+  stages {
+    stage('Clone') {
+      steps {
+        git branch: params.BRANCH, url: '{{repo_url}}'
       }
-    </script>
+    }
+
+    stage('Install') {
+      steps {
+        bat '{{install_command}}'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        bat '{{build_command}}'
+      }
+    }
+
+    stage('Test') {
+      steps {
+        bat '{{test_command}}'
+      }
+    }
+  }
+}</script>
     <sandbox>true</sandbox>
   </definition>
 
