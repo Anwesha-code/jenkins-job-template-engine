@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'main')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: params.BRANCH, url: 'https://github.com/Anwesha-code/jenkins-job-template-engine.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'echo Building project'
+            }
+        }
+    }
+}
