@@ -18,7 +18,8 @@ jenkins-template-engine/
 
 ## Steps
 - Start Jenkins (http://localhost:8080)
-- Generate API Token: Open Jenkins Dashboard; Go to Manage Jenkins -> Manage Users -> Your User -> Configure; Generate an API Token; Copy and save it securely
+- Generate API Token: Open Jenkins Dashboard; 
+        - Go to Manage Jenkins -> Manage Users -> Your User -> Configure; Generate an API Token; Copy and save it securely
 - Update API token in generate_jobs.py, and username
 
     JENKINS_URL = "http://localhost:8080"
