@@ -2,9 +2,17 @@ import yaml
 import requests
 from jinja2 import Template
 
-JENKINS_URL = "http://localhost:8080"
-USERNAME = "AnweshaSingh"
-API_TOKEN = "110d63401eb9d9937b6df043e73363cd6b"
+import os
+from dotenv import load_dotenv
+
+from pathlib import Path
+
+env_path = Path(__file__).resolve().parents[2] / ".env"
+load_dotenv(dotenv_path=env_path)
+
+JENKINS_URL = os.getenv("JENKINS_URL")
+USERNAME = os.getenv("JENKINS_USER")
+API_TOKEN = os.getenv("JENKINS_TOKEN")
 
 
 def load_template():
